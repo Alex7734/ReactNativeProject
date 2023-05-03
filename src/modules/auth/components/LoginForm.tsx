@@ -20,7 +20,7 @@ const LoginForm = ({onLogin}: Props) => {
       <Text style={styles.title}>Login Form</Text>
       {/* The value prop is used to set the value of the input, the onChangeText prop is used to set the value of the state variable */}
       <TextInput style={styles.input} value={email} placeholder="Email" onChangeText={(value)=>setEmail(value)}/> 
-      <TextInput style={styles.input} value={password} placeholder="Password" onChangeText={setPassword} />
+      <TextInput secureTextEntry style={styles.input} value={password} placeholder="Password" onChangeText={setPassword} />
       <Pressable style={styles.button} onPress={onPress}>
         <Text style={styles.buttonText}>Login</Text>
       </Pressable>

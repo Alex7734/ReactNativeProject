@@ -1,9 +1,10 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MainRoutes} from '../routes/main-routes';
-import {LogBox, StyleSheet, View} from 'react-native';
+import {LogBox, Pressable, StyleSheet, Text, View} from 'react-native';
 import {HomeTabsParamList} from '../routes/home-routes';
 import {HomeIcon, AccountIcon, FavoritesIcon} from '../../../assets/icons';
+import AccountScreen from '../../account/screens/AccountScreen';
 LogBox.ignoreAllLogs(true);
 
 const Tab = createBottomTabNavigator<HomeTabsParamList>();
@@ -34,8 +35,9 @@ const HomeTabNavigator: React.FC = () => {
         name={MainRoutes.ACCOUNT}
         options={{
           tabBarIcon: () => <AccountIcon width={25} height={25} />,
+          headerRight: () => <Pressable style={({pressed}) => ({ borderTopLeftRadius: 8, borderBottomLeftRadius: 8, backgroundColor: 'pink', width: 50, height: 30, opacity: pressed ? 0.6 : 1, justifyContent: 'center', alignItems: 'center'})}><Text>Edit</Text></Pressable>,
         }}
-        component={() => <View style={{backgroundColor: 'green'}}></View>}
+        component={AccountScreen}
       />
     </Tab.Navigator>
   );

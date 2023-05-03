@@ -9,7 +9,7 @@ const usersMocked: User[] = [
         email: 'alexmihoc@yahoo.com',
         username: 'alex',
         password: '123456',
-        profilePicture: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww',
+        profilePicture: '',
         favorites: ['1', '2', '3'],
         prefferedOpenings: ['1', '2', '3']
     },
@@ -18,7 +18,7 @@ const usersMocked: User[] = [
         email: 'alexmihoc2807@gmail.com',
         username: 'alex7734',
         password: '123456',
-        profilePicture: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww',
+        profilePicture: '',
         favorites: ['1', '2', '3'],
         prefferedOpenings: ['1', '2', '3']
     }
@@ -29,6 +29,7 @@ export interface AuthState {
     currentUser: User | null,
     getUser: (id: number) => User | null,
     setCurrentUser: (user: User) => void,
+    logout: () => void
 }
 
 export const useAuthStore = create(
@@ -44,7 +45,12 @@ export const useAuthStore = create(
                 (state: AuthState) => {
                     return {...state, currentUser: user}
                 }
-            )
+            ),
+            logout: () =>{
+                set((state: AuthState) => {
+                    return {...state, currentUser: null}}
+                )
+            }
         }), 
         {
             name: 'user-storage',
