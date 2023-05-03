@@ -8,6 +8,7 @@ import AuthNavigator from '../../auth/navigation/navigators/auth-navigator';
 import MainNavigator from './main-navigator';
 import {MainRoutes} from '../routes/main-routes';
 import {AuthRoutes} from '../../auth/navigation/routes/auth-routes';
+import { useAuthStore } from '../../auth/store/useAuthStore';
 
 export type AppParamList = {
   [AuthRoutes.AUTH]: undefined;
@@ -19,22 +20,22 @@ export type AppNavProps = {
   route: RouteProp<AppParamList>;
 };
 
-interface AppNavigatorProps {
-  isLoggedIn: boolean;
-}
-
 const Stack = createStackNavigator<AppParamList>();
 
-const AppNavigator: React.FC<AppNavigatorProps> = ({isLoggedIn}) => {
+const AppNavigator: React.FC = () => {
+  const {currentUser} = useAuthStore();
+
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      {isLoggedIn ? (
+      {currentUser?.id ? (
         <Stack.Screen name={MainRoutes.HOME} component={MainNavigator} />
       ) : (
-        <Stack.Screen name={AuthRoutes.AUTH} component={AuthNavigator} />
+        <Stack.Screen name={AuthRoutes.AUTH} component={AuthNavigator} options={{
+          headerShown: false
+        }} />
       )}
     </Stack.Navigator>
   );
