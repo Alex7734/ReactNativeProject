@@ -29,7 +29,8 @@ export interface AuthState {
     currentUser: User | null,
     getUser: (id: number) => User | null,
     setCurrentUser: (user: User) => void,
-    logout: () => void
+    logout: () => void,
+    updateUser: (user: User) => void
 }
 
 export const useAuthStore = create(
@@ -50,7 +51,16 @@ export const useAuthStore = create(
                 set((state: AuthState) => {
                     return {...state, currentUser: null}}
                 )
-            }
+            },
+            updateUser: (user: User) => {
+                const index = get().users?.findIndex(u => u.id === user.id)
+                if(!index) return;
+                const newUsers = get().users ?? []
+                newUsers[index] = user;
+                set((state: AuthState) => {
+                    return {...state, users: newUsers, currentUser: user}}
+                )
+            },
         }), 
         {
             name: 'user-storage',

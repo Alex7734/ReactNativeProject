@@ -1,8 +1,12 @@
-import { MainRoutes } from "./main-routes";
+export enum HomeRoutes {
+    HOME = 'Home',
+    FAVORITES = 'Favorites',
+    ACCOUNT = 'Account',
+}
 
 export type HomeTabsParamList = {
-  [MainRoutes.HOME]: undefined;
-  [MainRoutes.FAVORITES]: undefined;
-  [MainRoutes.ACCOUNT]: undefined;
+  [HomeRoutes.HOME]: undefined;
+  [HomeRoutes.FAVORITES]: undefined;
+  [HomeRoutes.ACCOUNT]: undefined;
 }
 

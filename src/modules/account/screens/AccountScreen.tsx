@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
 import { useAuthStore } from '../../auth/store/useAuthStore';
-import { AccountIcon } from '../../../assets/icons';
 import { Avatar } from '../components/Avatar';
 
 const AccountScreen = () => {

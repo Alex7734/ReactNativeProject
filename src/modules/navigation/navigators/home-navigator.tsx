@@ -2,9 +2,11 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MainRoutes} from '../routes/main-routes';
 import {LogBox, Pressable, StyleSheet, Text, View} from 'react-native';
-import {HomeTabsParamList} from '../routes/home-routes';
+import {HomeRoutes, HomeTabsParamList} from '../routes/home-routes';
 import {HomeIcon, AccountIcon, FavoritesIcon} from '../../../assets/icons';
 import AccountScreen from '../../account/screens/AccountScreen';
+import EditUserScreen from '../../account/screens/EditUserScreen';
+import { useNavigation } from '@react-navigation/native';
 LogBox.ignoreAllLogs(true);
 
 const Tab = createBottomTabNavigator<HomeTabsParamList>();
@@ -18,25 +20,29 @@ const HomeTabNavigator: React.FC = () => {
       }}
     >
       <Tab.Screen
-        name={MainRoutes.HOME}
+        name={HomeRoutes.HOME}
         options={{
           tabBarIcon: () => <HomeIcon width={25} height={25} />,
         }}
         component={() => <View style={{backgroundColor: 'red'}}></View>}
       />
       <Tab.Screen
-        name={MainRoutes.FAVORITES}
+        name={HomeRoutes.FAVORITES}
         options={{
           tabBarIcon: () => <FavoritesIcon width={25} height={25} />,
         }}
         component={() => <View style={{backgroundColor: 'blue'}}></View>}
       />
       <Tab.Screen
-        name={MainRoutes.ACCOUNT}
-        options={{
+        name={HomeRoutes.ACCOUNT}
+        options={({navigation}) => ({
           tabBarIcon: () => <AccountIcon width={25} height={25} />,
-          headerRight: () => <Pressable style={({pressed}) => ({ borderTopLeftRadius: 8, borderBottomLeftRadius: 8, backgroundColor: 'pink', width: 50, height: 30, opacity: pressed ? 0.6 : 1, justifyContent: 'center', alignItems: 'center'})}><Text>Edit</Text></Pressable>,
-        }}
+          headerRight: () => <Pressable 
+              onPress={() => navigation.navigate(MainRoutes.EDIT)}
+            style={({pressed}) => ({ borderTopLeftRadius: 8, borderBottomLeftRadius: 8, backgroundColor: 'pink', width: 50, height: 30, opacity: pressed ? 0.6 : 1, justifyContent: 'center', alignItems: 'center'})}>
+            <Text>Edit</Text></Pressable>,
+          
+        })}
         component={AccountScreen}
       />
     </Tab.Navigator>
