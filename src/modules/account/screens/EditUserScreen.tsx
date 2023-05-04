@@ -27,13 +27,20 @@ const EditUserScreen = (props: StackScreenProps<MainStackParamList, MainRoutes.E
     return image
   }
 
+  const navigation = useNavigation();
+  const handleGoBack = () => navigation.goBack();
+
   const handleEdit = () => {
-    updateUser({...currentUser, username: username, email: email} as User );
+    if(!currentUser) return
+    updateUser({...currentUser, username: username, email: email} );
     props.navigation.navigate(MainRoutes.HOME_TABS, {screen: HomeRoutes.ACCOUNT});
   }
 
   return (
     <View style={styles.container}>
+      <Pressable style={styles.goBackButton} onPress={handleGoBack}>
+        <Text style={styles.goBackText}>Go back</Text>
+      </Pressable>
       <Pressable onPress={handleOpenPicker}>
         <Avatar user={currentUser} />
       </Pressable>
@@ -111,7 +118,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   favoritesContainer: {
-    marginTop: 20,
+    marginTop: 150,
     paddingHorizontal: 20
   },
   sectionTitle: {
@@ -127,7 +134,20 @@ const styles = StyleSheet.create({
   favoriteText: {
     fontSize: 16,
     marginLeft: 10,
-  }
+  },
+  goBackButton: {
+    position: 'absolute',
+    top: 30,
+    left: 20,
+    zIndex: 1,
+    backgroundColor: 'lightblue',
+    padding: 10,
+  },
+  goBackText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
 
 export default EditUserScreen;

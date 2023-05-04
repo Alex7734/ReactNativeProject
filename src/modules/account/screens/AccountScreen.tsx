@@ -2,12 +2,11 @@ import React from 'react';
 import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
 import { useAuthStore } from '../../auth/store/useAuthStore';
 import { Avatar } from '../components/Avatar';
+import { useNavigation } from '@react-navigation/native';
 
 const AccountScreen = () => {
   const currentUser = useAuthStore(state => state.currentUser);
-
   const handleLogout = () => useAuthStore.getState().logout();
-
 
   return (
     <View style={styles.container}>
@@ -74,7 +73,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   favoritesContainer: {
-    marginTop: 20,
+    marginTop: 159,
     paddingHorizontal: 20
   },
   sectionTitle: {

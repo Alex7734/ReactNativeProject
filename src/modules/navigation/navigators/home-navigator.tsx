@@ -7,11 +7,13 @@ import {HomeIcon, AccountIcon, FavoritesIcon} from '../../../assets/icons';
 import AccountScreen from '../../account/screens/AccountScreen';
 import EditUserScreen from '../../account/screens/EditUserScreen';
 import { useNavigation } from '@react-navigation/native';
+import { HomeScreen } from '../../openings/screens/HomeScreen';
 LogBox.ignoreAllLogs(true);
 
 const Tab = createBottomTabNavigator<HomeTabsParamList>();
 
 const HomeTabNavigator: React.FC = () => {
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -24,7 +26,7 @@ const HomeTabNavigator: React.FC = () => {
         options={{
           tabBarIcon: () => <HomeIcon width={25} height={25} />,
         }}
-        component={() => <View style={{backgroundColor: 'red'}}></View>}
+        component={HomeScreen}
       />
       <Tab.Screen
         name={HomeRoutes.FAVORITES}
