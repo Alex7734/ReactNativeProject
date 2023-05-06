@@ -1,31 +1,39 @@
-import React from 'react';
-import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  TextInput,
+} from 'react-native';
 import { useAuthStore } from '../../auth/store/useAuthStore';
 import { Avatar } from '../components/Avatar';
-import { useNavigation } from '@react-navigation/native';
+import PreferredOpenings from '../components/PreferredOpenings';
 
 const AccountScreen = () => {
-  const currentUser = useAuthStore(state => state.currentUser);
+  const [newPreferredOpening, setNewPreferredOpening] = useState('');
+  const currentUser = useAuthStore((state) => state.currentUser);
+  const addPreferredOpening = useAuthStore((state) => state.addPreferredOpening);
+  const removePreferredOpening = useAuthStore((state) => state.removePreferredOpening);
   const handleLogout = () => useAuthStore.getState().logout();
 
   return (
     <View style={styles.container}>
-      <Avatar user={currentUser} />
-      <Text style={styles.username}>{currentUser?.username}</Text>
-      <Text style={styles.email}>{currentUser?.email}</Text>
-      <View style={styles.favoritesContainer}>
-        <Text style={styles.sectionTitle}>Favorites</Text>
-        {currentUser?.favorites.map((favorite, index) => (
-          <View style={styles.favoriteItem} key={index}>
-            <Text style={styles.favoriteText}>{favorite}</Text>
-          </View>
-        ))}
+      <View style={styles.cardContainer}>
+        <Avatar user={currentUser} />
+        <Text style={styles.username}>{currentUser?.username}</Text>
+        <Text style={styles.email}>{currentUser?.email}</Text>
+        <View style={styles.buttonsContainer}>
+          <Pressable style={styles.logoutButton} onPress={handleLogout}>
+            <Text style={styles.buttonText}>Logout</Text>
+          </Pressable>
+        </View>
       </View>
-      <View style={styles.buttonsContainer}>
-        <Pressable style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.buttonText}>Logout</Text>
-        </Pressable>
-      </View>
+      <PreferredOpenings
+        preferredOpenings={currentUser?.prefferedOpenings}
+        addPreferredOpening={addPreferredOpening}
+        removePreferredOpening={removePreferredOpening}
+      />
     </View>
   );
 };
@@ -37,11 +45,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#fff',
   },
-  profilePicture: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
+  cardContainer: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 3,
+    width: '100%',
     marginBottom: 20,
+    borderBottomRightRadius: 30,
+    borderBottomLeftRadius: 30,
   },
   username: {
     fontSize: 24,
@@ -50,46 +68,23 @@ const styles = StyleSheet.create({
   },
   email: {
     fontSize: 16,
-    marginBottom: 20,
   },
   buttonsContainer: {
     flexDirection: 'row',
     margin: 20,
   },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 10,
-    borderRadius: 5,
-    marginRight: 10,
-  },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   logoutButton: {
     backgroundColor: '#FF3B30',
     padding: 10,
     borderRadius: 5,
+    width: 100,
   },
-  favoritesContainer: {
-    marginTop: 159,
-    paddingHorizontal: 20
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  favoriteItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 5,
-  },
-  favoriteText: {
-    fontSize: 16,
-    marginLeft: 10,
-  }
 });
 
 export default AccountScreen;
