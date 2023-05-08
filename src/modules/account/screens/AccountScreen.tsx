@@ -4,14 +4,12 @@ import {
   View,
   Text,
   Pressable,
-  TextInput,
 } from 'react-native';
 import { useAuthStore } from '../../auth/store/useAuthStore';
 import { Avatar } from '../components/Avatar';
 import PreferredOpenings from '../components/PreferredOpenings';
 
 const AccountScreen = () => {
-  const [newPreferredOpening, setNewPreferredOpening] = useState('');
   const currentUser = useAuthStore((state) => state.currentUser);
   const addPreferredOpening = useAuthStore((state) => state.addPreferredOpening);
   const removePreferredOpening = useAuthStore((state) => state.removePreferredOpening);
