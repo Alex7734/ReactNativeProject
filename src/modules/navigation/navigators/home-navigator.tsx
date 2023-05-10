@@ -18,7 +18,8 @@ const HomeTabNavigator: React.FC = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarActiveTintColor: '#000',
-        tabBarStyle: styles.bottomTab
+        tabBarStyle: styles.bottomTab,
+        headerShown: false,
       }}
     >
       <Tab.Screen
