@@ -15,13 +15,13 @@ import {
 
 export const HomeScreen: React.FC = () => {
   const [page, setPage] = useState<number>(1);
-  const {data: openings, isLoading, hasMore} = useChessOpenings(page); // Updated line
+  const {data: openings, isLoading, hasMore} = useChessOpenings(page);
   const [filteredOpenings, setFilteredOpenings] = useState<Opening[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
   const [filters, setFilters] = useState<{whiteOpening: boolean | null}>({
     whiteOpening: null,
   });
-  const [reachedEnd, setReachedEnd] = useState<boolean>(false); // Updated line
+  const [reachedEnd, setReachedEnd] = useState<boolean>(false); 
   const [modalVisible, setModalVisible] = useState(false);
 
   const onEndReached = () => {
@@ -36,18 +36,19 @@ export const HomeScreen: React.FC = () => {
   const handleFilter = useCallback(
     (newFilters: {whiteOpening: boolean | null}) => {
       setFilters(newFilters);
-    }, [],
+    },
+    [filters],
   );
 
   useEffect(() => {
     if (openings) {
       setFilteredOpenings(openings);
     }
-  }, [filters]);
+  }, [openings]);
 
   useEffect(() => {
     if (openings) {
-      let filtered = openings;
+      let filtered = [...openings];
 
       if (searchValue) {
         filtered = filtered.filter((opening: {name: string}) =>
