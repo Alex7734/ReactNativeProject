@@ -4,7 +4,7 @@ import {Opening} from '../types';
 const useChessOpenings = (page: number) => {
   const [data, setData] = useState<Opening[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [hasMore, setHasMore] = useState<boolean>(true); // Added state
+  const [hasMore, setHasMore] = useState<boolean>(true);
   const limit = 10;
 
   useEffect(() => {
