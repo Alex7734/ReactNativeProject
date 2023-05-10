@@ -5,27 +5,39 @@ import {LogBox, Pressable, StyleSheet, Text, View} from 'react-native';
 import {HomeRoutes, HomeTabsParamList} from '../routes/home-routes';
 import {HomeIcon, AccountIcon, FavoritesIcon} from '../../../assets/icons';
 import AccountScreen from '../../account/screens/AccountScreen';
-import EditUserScreen from '../../account/screens/EditUserScreen';
-import { useNavigation } from '@react-navigation/native';
 import { HomeScreen } from '../../openings/screens/HomeScreen';
+import FavoritesScreen from '../../openings/screens/FavoritesScreen';
 LogBox.ignoreAllLogs(true);
 
 const Tab = createBottomTabNavigator<HomeTabsParamList>();
 
 const HomeTabNavigator: React.FC = () => {
-
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarActiveTintColor: '#000',
         tabBarStyle: styles.bottomTab,
-        headerShown: false,
+        headerStyle: {
+          backgroundColor: '#3C3C3C',
+          elevation: 10,
+          borderBottomWidth: 0,
+          borderBottomEndRadius: 20,
+          borderBottomLeftRadius: 20,
+        },
+        headerTitle: 'Chess Openings Explorer',
+        headerTitleStyle: {
+          color: '#FFFFFF',
+          fontWeight: 'bold',
+          fontSize: 20,
+          alignSelf: 'center',
+        },
       }}
     >
       <Tab.Screen
         name={HomeRoutes.HOME}
         options={{
           tabBarIcon: () => <HomeIcon width={25} height={25} />,
+
         }}
         component={HomeScreen}
       />
@@ -34,7 +46,7 @@ const HomeTabNavigator: React.FC = () => {
         options={{
           tabBarIcon: () => <FavoritesIcon width={25} height={25} />,
         }}
-        component={() => <View style={{backgroundColor: 'blue'}}></View>}
+        component={FavoritesScreen}
       />
       <Tab.Screen
         name={HomeRoutes.ACCOUNT}
@@ -42,7 +54,7 @@ const HomeTabNavigator: React.FC = () => {
           tabBarIcon: () => <AccountIcon width={25} height={25} />,
           headerRight: () => <Pressable 
               onPress={() => navigation.navigate(MainRoutes.EDIT)}
-            style={({pressed}) => ({ borderTopLeftRadius: 8, borderBottomLeftRadius: 8, backgroundColor: 'pink', width: 50, height: 30, opacity: pressed ? 0.6 : 1, justifyContent: 'center', alignItems: 'center'})}>
+            style={({pressed}) => ({ borderTopLeftRadius: 8, borderBottomLeftRadius: 8, backgroundColor: 'white', width: 50, height: 25, opacity: pressed ? 0.6 : 1, justifyContent: 'center', alignItems: 'center'})}>
             <Text>Edit</Text></Pressable>,
           
         })}

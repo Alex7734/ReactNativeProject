@@ -3,19 +3,32 @@ import {View, Text, Image, StyleSheet, Pressable} from 'react-native';
 import {Opening} from '../types';
 import {calculateDifficultyColor} from '../utils/calculateDifficultyLevel';
 import { useNavigation } from '@react-navigation/native';
+import { FavoritesIcon } from '../../../assets/icons';
+import { useAuthStore } from '../../auth/store/useAuthStore';
 import { MainRoutes } from '../../navigation/routes/main-routes';
 
 type OpeningListItemProps = {
   opening: Opening;
+  favourite?: boolean;
 };
 
-const OpeningListItem = ({opening} : OpeningListItemProps) => {
+const OpeningListItem = ({opening, favourite} : OpeningListItemProps) => {
   const navigation = useNavigation();
+  const { currentUser, removeFavoriteOpening, addFavoriteOpening } = useAuthStore();
 
   const handlePress = () => {
     navigation.navigate(MainRoutes.DETAILS, {opening});
   };
 
+  const isFavorite = currentUser?.favorites.includes(opening.name);
+
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      removeFavoriteOpening(opening.name);
+    } else {
+      addFavoriteOpening(opening.name);
+    }
+  };
 
   return (
     <Pressable onPress={handlePress}>
@@ -35,6 +48,14 @@ const OpeningListItem = ({opening} : OpeningListItemProps) => {
             </Text>
           </View>
         </View>
+        { favourite && (
+        <Pressable onPress={handleToggleFavorite}>
+          {isFavorite ? (
+          <FavoritesIcon width={40} height={40} fill={'#E63946'} />
+          ) : (
+            <FavoritesIcon width={40} height={40}  />
+            )}
+        </Pressable>)}
       </View>
     </Pressable>
   );
@@ -81,6 +102,11 @@ const styles = StyleSheet.create({
   },
   value: {
     fontSize: 12,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    marginLeft: 'auto',
   },
 });
 

@@ -8,16 +8,27 @@ import {
 import { useAuthStore } from '../../auth/store/useAuthStore';
 import { Avatar } from '../components/Avatar';
 import PreferredOpenings from '../components/PreferredOpenings';
+import { useNavigation } from '@react-navigation/native';
+import { MainRoutes } from '../../navigation/routes/main-routes';
 
 const AccountScreen = () => {
   const currentUser = useAuthStore((state) => state.currentUser);
   const addPreferredOpening = useAuthStore((state) => state.addPreferredOpening);
   const removePreferredOpening = useAuthStore((state) => state.removePreferredOpening);
   const handleLogout = () => useAuthStore.getState().logout();
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <View style={styles.cardContainer}>
+        <Pressable>
+          <Text style={styles.buttonText}>Edit</Text>
+        </Pressable>
+          {/* <Pressable 
+            onPress={() => navigation.navigate(MainRoutes.EDIT)}
+            style={({pressed}) => ({ borderTopLeftRadius: 8, borderBottomLeftRadius: 8, backgroundColor: 'pink', width: 50, height: 30, opacity: pressed ? 0.6 : 1, justifyContent: 'center', alignItems: 'center'})}>
+            <Text>Edit</Text>
+          </Pressable>, */}
         <Avatar user={currentUser} />
         <Text style={styles.username}>{currentUser?.username}</Text>
         <Text style={styles.email}>{currentUser?.email}</Text>
@@ -58,6 +69,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
+    height: 270,
   },
   username: {
     fontSize: 24,

@@ -38,22 +38,11 @@ const EditUserScreen = (props: StackScreenProps<MainStackParamList, MainRoutes.E
 
   return (
     <View style={styles.container}>
-      <Pressable style={styles.goBackButton} onPress={handleGoBack}>
-        <Text style={styles.goBackText}>Go back</Text>
-      </Pressable>
       <Pressable onPress={handleOpenPicker}>
         <Avatar user={currentUser} />
       </Pressable>
       <TextInput style={styles.username} placeholder={currentUser?.username} value={username} onChangeText={setUsername} />
       <TextInput style={styles.email} placeholder={currentUser?.email} value={email} onChangeText={(value) => setEmail(value)}/>
-      <View style={styles.favoritesContainer}>
-        <Text style={styles.sectionTitle}>Favorites</Text>
-        {currentUser?.favorites.map((favorite, index) => (
-          <View style={styles.favoriteItem} key={index}>
-            <Text style={styles.favoriteText}>{favorite}</Text>
-          </View>
-        ))}
-      </View>
       <View style={styles.buttonsContainer}>
         <Pressable style={styles.editButton} onPress={handleEdit}>
           <Text style={styles.buttonText}>Submit edit</Text>
@@ -137,8 +126,8 @@ const styles = StyleSheet.create({
   },
   goBackButton: {
     position: 'absolute',
-    top: 30,
-    left: 20,
+    top: 10,
+    left: 10,
     zIndex: 1,
     backgroundColor: 'lightblue',
     padding: 10,
