@@ -1,27 +1,33 @@
-import { useState, useEffect } from 'react';
-import { Opening } from '../types';
+import {useState, useEffect} from 'react';
+import {Opening} from '../types';
 
-const fetchChessOpenings = async (page = 1, limit = 10) => {
-  const response = await fetch(
-    `https://6453d40ae9ac46cedf30de1e.mockapi.io/chessOpenings?page=${page}&limit=${limit}`,
-  );
-  return await response.json();
-};
-
-export const useChessOpenings = () => {
-  const [data, setData] = useState<Opening[]>([]);
+const useChessOpenings = (page: number) => {
+  const [data, setData] = useState<Opening[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [hasMore, setHasMore] = useState<boolean>(true); // Added state
+  const limit = 10;
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const fetchedData = await fetchChessOpenings();
-      setData(fetchedData);
-      setIsLoading(false);
+      try {
+        const response = await fetch(`https://6453d40ae9ac46cedf30de1e.mockapi.io/chessOpenings?page=${page}&limit=${limit}`);
+        const result = await response.json();
+        setData(prevData => (prevData ? [...prevData, ...result] : result)); 
+        setHasMore(result.length === limit); 
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setData([]);
+        setHasMore(false);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchData();
-  }, []);
+  }, [page]);
 
-  return { data, isLoading };
+  return {data, isLoading, hasMore}; 
 };
+
+export {useChessOpenings};

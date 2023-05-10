@@ -5,7 +5,6 @@ import SearchBar from '../components/SearchBar';
 import OpeningListItem from '../components/OpeningListItem';
 import FilterModal from '../components/FilterModal';
 import {
-  SafeAreaView,
   FlatList,
   ActivityIndicator,
   StyleSheet,
@@ -13,16 +12,22 @@ import {
   Pressable,
   Text,
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
 
 export const HomeScreen: React.FC = () => {
-  const {data: openings, isLoading} = useChessOpenings();
+  const [page, setPage] = useState<number>(1);
+  const {data: openings, isLoading, hasMore} = useChessOpenings(page); // Updated line
   const [filteredOpenings, setFilteredOpenings] = useState<Opening[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
   const [filters, setFilters] = useState<{whiteOpening: boolean | null}>({
     whiteOpening: null,
   });
+  const [reachedEnd, setReachedEnd] = useState<boolean>(false); // Updated line
   const [modalVisible, setModalVisible] = useState(false);
+
+  const onEndReached = () => {
+    if (reachedEnd) return;
+    setPage(prevPage => prevPage + 1);
+  };
 
   const handleSearch = useCallback((searchText: string) => {
     setSearchValue(searchText);
@@ -31,9 +36,14 @@ export const HomeScreen: React.FC = () => {
   const handleFilter = useCallback(
     (newFilters: {whiteOpening: boolean | null}) => {
       setFilters(newFilters);
-    },
-    [],
+    }, [],
   );
+
+  useEffect(() => {
+    if (openings) {
+      setFilteredOpenings(openings);
+    }
+  }, [filters]);
 
   useEffect(() => {
     if (openings) {
@@ -56,8 +66,12 @@ export const HomeScreen: React.FC = () => {
     }
   }, [openings, searchValue, filters]);
 
+  useEffect(() => {
+    setReachedEnd(!hasMore);
+  }, [hasMore]);
+
   return (
-    <ScrollView>
+    <View style={styles.container}>
       <View style={styles.searchAndFilterContainer}>
         <View style={styles.alignLeft}>
           <SearchBar onSearch={handleSearch} />
@@ -68,21 +82,21 @@ export const HomeScreen: React.FC = () => {
           <Text style={styles.filterButtonText}>Filters</Text>
         </Pressable>
       </View>
-      {isLoading ? (
-        <ActivityIndicator size="large" />
-      ) : (
-        <FlatList
-          data={filteredOpenings}
-          renderItem={({item}) => <OpeningListItem opening={item} />}
-          keyExtractor={item => item.id.toString()}
-        />
-      )}
+      <FlatList
+        style={styles.flatList}
+        data={filteredOpenings}
+        renderItem={({item}) => <OpeningListItem opening={item} />}
+        keyExtractor={item => item.id.toString()}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0}
+      />
+      {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
       <FilterModal
         visible={modalVisible}
         onFilter={handleFilter}
         onRequestClose={() => setModalVisible(false)}
       />
-    </ScrollView>
+    </View>
   );
 };
 
@@ -115,6 +129,9 @@ const styles = StyleSheet.create({
   alignRight: {
     flex: 1,
     alignItems: 'flex-end',
-  }
-
+  },
+  flatList: {
+    width: '100%',
+    padding: 5,
+  },
 });
