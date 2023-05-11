@@ -6,7 +6,7 @@ import {useChessOpenings} from '../hooks/useChessOpeninigs';
 
 const FavoritesScreen = () => {
   const {currentUser} = useAuthStore();
-  const {data: allOpenings, isLoading} = useChessOpenings(1);
+  const {data: allOpenings, isLoading} = useChessOpenings(1, -1);
   if (isLoading || !currentUser || !allOpenings) {
     return <View><Text>Loading...</Text></View>;
   }

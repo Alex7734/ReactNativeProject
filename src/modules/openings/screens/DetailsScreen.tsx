@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { Opening } from '../types';
 import { calculateDifficultyColor } from '../utils/calculateDifficultyLevel';
 import { useNavigation } from '@react-navigation/native';
-import { FavoritesIcon } from '../../../assets/icons';
+import { FavoritesIcon, FavoritesIconFilled } from '../../../assets/icons';
 import { useAuthStore } from '../../auth/store/useAuthStore';
 
 type DetailsScreenProps = {
@@ -39,7 +39,7 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ route }) => {
           <Text style={styles.buttonText}>Back</Text>
         </Pressable>
         <Pressable onPress={toggleFavorite}>
-          <FavoritesIcon width={40} height={40} fill={isFavorite ? '#E63946' : '#000'} />
+          {isFavorite ? <FavoritesIconFilled width={40} height={40} /> : <FavoritesIcon width={40} height={40} />}
         </Pressable>
       </View>
       <View style={styles.imageContainer}>

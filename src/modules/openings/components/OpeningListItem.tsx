@@ -3,7 +3,7 @@ import {View, Text, Image, StyleSheet, Pressable} from 'react-native';
 import {Opening} from '../types';
 import {calculateDifficultyColor} from '../utils/calculateDifficultyLevel';
 import { useNavigation } from '@react-navigation/native';
-import { FavoritesIcon } from '../../../assets/icons';
+import { FavoritesIcon, FavoritesIconFilled } from '../../../assets/icons';
 import { useAuthStore } from '../../auth/store/useAuthStore';
 import { MainRoutes } from '../../navigation/routes/main-routes';
 
@@ -50,11 +50,7 @@ const OpeningListItem = ({opening, favourite} : OpeningListItemProps) => {
         </View>
         { favourite && (
         <Pressable onPress={handleToggleFavorite}>
-          {isFavorite ? (
-          <FavoritesIcon width={40} height={40} fill={'#E63946'} />
-          ) : (
-            <FavoritesIcon width={40} height={40}  />
-            )}
+          {isFavorite ? <FavoritesIconFilled width={40} height={40} /> : <FavoritesIcon width={40} height={40} />}
         </Pressable>)}
       </View>
     </Pressable>

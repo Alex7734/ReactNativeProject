@@ -6,3 +6,6 @@ export { FavoritesIcon }
 
 import AccountIcon from './person-outline.svg'
 export { AccountIcon }
+
+import FavoritesIconFilled from './heart-filled.svg'
+export { FavoritesIconFilled }

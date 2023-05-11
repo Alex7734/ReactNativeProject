@@ -25,17 +25,19 @@ const FilterModal: React.FC<FilterModalProps> = ({
   };
 
   useEffect(() => {
-    if (whiteOpening !== null) {
-      handleApplyFilters();
-    }
+    handleApplyFilters();
   }, [whiteOpening]);
 
+  const handleBothOpeningToggle = () => {
+    setWhiteOpening(null);
+  };
+
   const handleWhiteOpeningToggle = () => {
-    setWhiteOpening((prevState) => (prevState === true ? null : true));
+    setWhiteOpening(true);
   };
 
   const handleBlackOpeningToggle = () => {
-    setWhiteOpening((prevState) => (prevState === false ? null : false));
+    setWhiteOpening(false);
   };
 
   return (
@@ -50,6 +52,10 @@ const FilterModal: React.FC<FilterModalProps> = ({
         onPress={onRequestClose}
       >
         <View style={styles.modalContainer}>
+          <Pressable style={styles.filter} onPress={handleBothOpeningToggle}>
+            <Text>Both Colors</Text>
+            <Text>{whiteOpening === null ? '✔' : '✘'}</Text>
+          </Pressable>
           <Pressable style={styles.filter} onPress={handleWhiteOpeningToggle}>
             <Text>White Opening</Text>
             <Text>{whiteOpening === true ? '✔' : '✘'}</Text>
@@ -64,6 +70,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
   );
 };
 
+
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
@@ -74,13 +81,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    padding: 10,
+    padding: 20,
   },
   filter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    marginBottom: 20,
   },
   button: {
     backgroundColor: '#007AFF',
@@ -92,5 +103,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
 
 export default FilterModal;
