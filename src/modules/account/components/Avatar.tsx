@@ -13,7 +13,6 @@ export const Avatar = ({user}: Props) => {
     const {setCurrentUser} = useAuthStore()
     
     useEffect(() => setCurrentUser({ ...user, profilePicture: '', favorites: ['French Defense: Tarrasch Variation', 'Italian Game: Giucco Pianissimo', 'Sicilian Defense: Alapin Variation'] } as User), [])
-    console.log(user?.profilePicture)
 
     return (
         <View style={styles.container}>

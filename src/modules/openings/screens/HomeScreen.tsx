@@ -39,7 +39,7 @@ export const HomeScreen: React.FC = () => {
           <Text style={styles.filterButtonText}>Filters</Text>
         </Pressable>
       </View>
-      <ChessOpeningsList searchValue={searchValue} filters={filters} />      
+       <ChessOpeningsList searchValue={searchValue} filters={filters} />      
       <FilterModal
         visible={modalVisible}
     

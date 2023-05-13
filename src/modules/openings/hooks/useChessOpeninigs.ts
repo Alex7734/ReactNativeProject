@@ -18,7 +18,6 @@ const useChessOpenings = (page: number, limit: number) => {
         setData(prevData => (prevData ? [...prevData, ...result] : result)); 
         setHasMore(result.length === limit); 
       } catch (error) {
-        console.error('Error fetching data:', error);
         setData([]);
         setHasMore(false);
       } finally {

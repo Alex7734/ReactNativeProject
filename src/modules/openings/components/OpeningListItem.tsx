@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { FavoritesIcon, FavoritesIconFilled } from '../../../assets/icons';
 import { useAuthStore } from '../../auth/store/useAuthStore';
 import { MainRoutes } from '../../navigation/routes/main-routes';
+import { MyImage } from './MyImage';
 
 type OpeningListItemProps = {
   opening: Opening;
@@ -33,7 +34,7 @@ const OpeningListItem = ({opening, favourite} : OpeningListItemProps) => {
   return (
     <Pressable onPress={handlePress}>
       <View style={styles.container}>
-        <Image source={{uri: opening.photo}} style={styles.photo} />
+        <MyImage uri={opening.photo}/>
         <View style={styles.detailsContainer}>
           <Text style={styles.name}>{opening.name}</Text>
           <Text style={styles.description}>{opening.description}</Text>
@@ -66,12 +67,6 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     elevation: 2,
-  },
-  photo: {
-    width: 80,
-    height: 80,
-    borderRadius: 5,
-    marginRight: 10,
   },
   detailsContainer: {
     flex: 1,

@@ -17,8 +17,6 @@ export const ChessOpeningsList: React.FC<ChessOpeningsListProps> = ({searchValue
   const {data: openings, isLoading, hasMore} = useChessOpenings(page, 10);
   const [filteredOpenings, setFilteredOpenings] = useState<Opening[]>([]);
 
-  console.log(searchValue, filters)
-
   const onEndReached = () => {
     if (!hasMore) return;
     setPage(prevPage => prevPage + 1);
