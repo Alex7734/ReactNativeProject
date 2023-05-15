@@ -7,11 +7,17 @@ import { useNavigation } from '@react-navigation/native';
 import { MainRoutes } from '../../navigation/routes/main-routes';
 
 const AccountScreen = () => {
-  const currentUser = useAuthStore((state) => state.currentUser);
-  const addPreferredOpening = useAuthStore((state) => state.addPreferredOpening);
-  const removePreferredOpening = useAuthStore((state) => state.removePreferredOpening);
-  const handleLogout = () => useAuthStore.getState().logout();
+  const {
+    currentUser,
+    addPreferredOpening,
+    removePreferredOpening,
+    logout,
+  } = useAuthStore();
   const navigation = useNavigation();
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <View style={styles.container}>
