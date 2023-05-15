@@ -63,36 +63,40 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FFF',
-    borderRadius: 5,
-    padding: 10,
+    borderRadius: 10,
+    padding: 16,
     marginBottom: 10,
     elevation: 2,
   },
   detailsContainer: {
     flex: 1,
     justifyContent: 'center',
+    marginLeft: 16,
   },
   name: {
     fontWeight: 'bold',
     fontSize: 16,
-    marginBottom: 5,
+    marginBottom: 8,
+    color: '#1D3557',
   },
   description: {
     fontSize: 14,
     color: '#666',
-    marginBottom: 5,
+    marginBottom: 8,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 2,
+    marginBottom: 4,
   },
   label: {
     fontWeight: 'bold',
     marginRight: 5,
+    color: '#1D3557',
   },
   value: {
     fontSize: 12,
+    color: '#888', 
   },
   icon: {
     width: 24,
@@ -102,3 +106,4 @@ const styles = StyleSheet.create({
 });
 
 export default OpeningListItem;
+

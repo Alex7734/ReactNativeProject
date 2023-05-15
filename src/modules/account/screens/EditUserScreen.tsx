@@ -2,12 +2,11 @@ import React from 'react';
 import { StyleSheet, View, Text, Image, Pressable, TextInput } from 'react-native';
 import { useAuthStore } from '../../auth/store/useAuthStore';
 import { Avatar } from '../components/Avatar';
-import { User } from '../../auth/types/user';
 import { useNavigation } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
 import { MainRoutes, MainStackParamList } from '../../navigation/routes/main-routes';
 import { HomeRoutes } from '../../navigation/routes/home-routes';
 import ImagePicker from 'react-native-image-crop-picker';
+import { StackScreenProps } from '@react-navigation/stack/lib/typescript/src/types';
 
 const EditUserScreen = (props: StackScreenProps<MainStackParamList, MainRoutes.EDIT>) => {
   const currentUser = useAuthStore(state => state.currentUser);
@@ -28,11 +27,10 @@ const EditUserScreen = (props: StackScreenProps<MainStackParamList, MainRoutes.E
   }
 
   const navigation = useNavigation();
-  const handleGoBack = () => navigation.goBack();
 
   const handleEdit = () => {
     if(!currentUser) return
-    updateUser({...currentUser, username: username, email: email} );
+    updateUser({...currentUser, username: username, email: email});
     props.navigation.navigate(MainRoutes.HOME_TABS, {screen: HomeRoutes.ACCOUNT});
   }
 
@@ -42,10 +40,10 @@ const EditUserScreen = (props: StackScreenProps<MainStackParamList, MainRoutes.E
         <Avatar user={currentUser} />
       </Pressable>
       <TextInput style={styles.username} placeholder={currentUser?.username} value={username} onChangeText={setUsername} />
-      <TextInput style={styles.email} placeholder={currentUser?.email} value={email} onChangeText={(value) => setEmail(value)}/>
+      <TextInput style={styles.email} placeholder={currentUser?.email} value={email} onChangeText={setEmail} />
       <View style={styles.buttonsContainer}>
         <Pressable style={styles.editButton} onPress={handleEdit}>
-          <Text style={styles.buttonText}>Submit edit</Text>
+          <Text style={styles.buttonText}>Submit Edit</Text>
         </Pressable>
       </View>
     </View>
@@ -58,12 +56,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
-  },
-  profilePicture: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    marginBottom: 20,
   },
   username: {
     fontSize: 24,
@@ -90,52 +82,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     margin: 20,
   },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 10,
-    borderRadius: 5,
-    marginRight: 10,
+  editButton: {
+    backgroundColor: 'lightblue',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  editButton: {
-    backgroundColor: 'lightblue',
-    padding: 10,
-    borderRadius: 5,
-  },
-  favoritesContainer: {
-    marginTop: 150,
-    paddingHorizontal: 20
-  },
-  sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  favoriteItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 5,
-  },
-  favoriteText: {
-    fontSize: 16,
-    marginLeft: 10,
-  },
-  goBackButton: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    zIndex: 1,
-    backgroundColor: 'lightblue',
-    padding: 10,
-  },
-  goBackText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: '#F5F5F5',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.25,
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 8,
     color: '#1D3557',
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
   },
   description: {

@@ -1,10 +1,5 @@
-import React, { useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-} from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { useAuthStore } from '../../auth/store/useAuthStore';
 import { Avatar } from '../components/Avatar';
 import PreferredOpenings from '../components/PreferredOpenings';
@@ -21,28 +16,29 @@ const AccountScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.cardContainer}>
-        <Pressable>
-          <Text style={styles.buttonText}>Edit</Text>
-        </Pressable>
-          {/* <Pressable 
-            onPress={() => navigation.navigate(MainRoutes.EDIT)}
-            style={({pressed}) => ({ borderTopLeftRadius: 8, borderBottomLeftRadius: 8, backgroundColor: 'pink', width: 50, height: 30, opacity: pressed ? 0.6 : 1, justifyContent: 'center', alignItems: 'center'})}>
-            <Text>Edit</Text>
-          </Pressable>, */}
-        <Avatar user={currentUser} />
-        <Text style={styles.username}>{currentUser?.username}</Text>
-        <Text style={styles.email}>{currentUser?.email}</Text>
+        <View style={styles.profileContainer}>
+          <Avatar user={currentUser} />
+          <Text style={styles.username}>{currentUser?.username}</Text>
+          <Text style={styles.email}>{currentUser?.email}</Text>
+        </View>
         <View style={styles.buttonsContainer}>
+          <Pressable
+            onPress={() => navigation.navigate(MainRoutes.EDIT)}
+            style={styles.editButton}>
+            <Text style={styles.buttonText}>Edit Profile</Text>
+          </Pressable>
           <Pressable style={styles.logoutButton} onPress={handleLogout}>
             <Text style={styles.buttonText}>Logout</Text>
           </Pressable>
         </View>
       </View>
-      <PreferredOpenings
-        preferredOpenings={currentUser?.prefferedOpenings}
-        addPreferredOpening={addPreferredOpening}
-        removePreferredOpening={removePreferredOpening}
-      />
+      <View style={styles.preferredOpeningsContainer}>
+        <PreferredOpenings
+          preferredOpenings={currentUser?.prefferedOpenings}
+          addPreferredOpening={addPreferredOpening}
+          removePreferredOpening={removePreferredOpening}
+        />
+      </View>
     </View>
   );
 };
@@ -50,50 +46,56 @@ const AccountScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#fff',
   },
   cardContainer: {
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 3,
-    width: '100%',
-    marginBottom: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
-    height: 270,
+    backgroundColor: '#F5F5F5',
+  },
+  profileContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
   },
   username: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginVertical: 10,
+    color: '#1D3557',
   },
   email: {
     fontSize: 16,
+    color: '#1D3557',
   },
   buttonsContainer: {
     flexDirection: 'row',
-    margin: 20,
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
+  editButton: {
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginRight: 10,
   },
   logoutButton: {
     backgroundColor: '#FF3B30',
-    padding: 10,
-    borderRadius: 5,
-    width: 100,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: '#FFF',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  preferredOpeningsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

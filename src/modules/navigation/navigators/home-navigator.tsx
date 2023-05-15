@@ -1,9 +1,9 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {MainRoutes} from '../routes/main-routes';
-import {LogBox, Pressable, StyleSheet, Text, View} from 'react-native';
-import {HomeRoutes, HomeTabsParamList} from '../routes/home-routes';
-import {HomeIcon, AccountIcon, FavoritesIcon} from '../../../assets/icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MainRoutes } from '../routes/main-routes';
+import { LogBox, Pressable, StyleSheet, Text, View } from 'react-native';
+import { HomeRoutes, HomeTabsParamList } from '../routes/home-routes';
+import { HomeIcon, AccountIcon, FavoritesIcon } from '../../../assets/icons';
 import AccountScreen from '../../account/screens/AccountScreen';
 import { HomeScreen } from '../../openings/screens/HomeScreen';
 import FavoritesScreen from '../../openings/screens/FavoritesScreen';
@@ -18,15 +18,17 @@ const HomeTabNavigator: React.FC = () => {
         tabBarActiveTintColor: '#000',
         tabBarStyle: styles.bottomTab,
         headerStyle: {
-          backgroundColor: '#3C3C3C',
           elevation: 10,
-          borderBottomWidth: 0,
-          borderBottomEndRadius: 20,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.3,
+          shadowRadius: 2,
           borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 20
         },
         headerTitle: 'Chess Openings Explorer',
+        headerTitleAlign: 'center',
         headerTitleStyle: {
-          color: '#FFFFFF',
           fontWeight: 'bold',
           fontSize: 20,
           alignSelf: 'center',
@@ -37,7 +39,6 @@ const HomeTabNavigator: React.FC = () => {
         name={HomeRoutes.HOME}
         options={{
           tabBarIcon: () => <HomeIcon width={25} height={25} />,
-
         }}
         component={HomeScreen}
       />
@@ -50,13 +51,8 @@ const HomeTabNavigator: React.FC = () => {
       />
       <Tab.Screen
         name={HomeRoutes.ACCOUNT}
-        options={({navigation}) => ({
+        options={({ navigation }) => ({
           tabBarIcon: () => <AccountIcon width={25} height={25} />,
-          headerRight: () => <Pressable 
-              onPress={() => navigation.navigate(MainRoutes.EDIT)}
-            style={({pressed}) => ({ borderTopLeftRadius: 8, borderBottomLeftRadius: 8, backgroundColor: 'white', width: 50, height: 25, opacity: pressed ? 0.6 : 1, justifyContent: 'center', alignItems: 'center'})}>
-            <Text>Edit</Text></Pressable>,
-          
         })}
         component={AccountScreen}
       />
@@ -66,12 +62,12 @@ const HomeTabNavigator: React.FC = () => {
 
 const styles = StyleSheet.create({
   bottomTab: {
-      elevation: 10,
-      paddingBottom: 5,
-      borderTopEndRadius: 20,
-      borderTopStartRadius: 20,
-      height: 60,
-  }
-})
+    elevation: 10,
+    paddingBottom: 5,
+    borderTopEndRadius: 20,
+    borderTopStartRadius: 20,
+    height: 60,
+  },
+});
 
 export default HomeTabNavigator;

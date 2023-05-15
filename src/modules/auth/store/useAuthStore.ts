@@ -56,14 +56,16 @@ export const useAuthStore = create(
         });
       },
       updateUser: (user: User) => {
-        const index = get().users?.findIndex(u => u.id === user.id);
-        if (!index) return;
-        const newUsers = get().users ?? [];
-        newUsers[index] = user;
         set((state: AuthState) => {
-          return {...state, users: newUsers, currentUser: user};
+          const updatedUsers = state.users?.map(u => (u.id === user.id ? user : u));
+          return {
+            ...state,
+            users: updatedUsers,
+            currentUser: user,
+          };
         });
       },
+      
       addPreferredOpening: (openingId: string) => {
         const currentUser = get().currentUser;
         if (!currentUser) return;
