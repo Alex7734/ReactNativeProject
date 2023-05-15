@@ -1,21 +1,22 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Pressable, Image} from 'react-native';
 import {Opening} from '../types';
 import {calculateDifficultyColor} from '../utils/calculateDifficultyLevel';
-import { useNavigation } from '@react-navigation/native';
-import { FavoritesIcon, FavoritesIconFilled } from '../../../assets/icons';
-import { useAuthStore } from '../../auth/store/useAuthStore';
-import { MainRoutes } from '../../navigation/routes/main-routes';
-import { MyImage } from './MyImage';
+import {useNavigation} from '@react-navigation/native';
+import {FavoritesIcon, FavoritesIconFilled} from '../../../assets/icons';
+import {useAuthStore} from '../../auth/store/useAuthStore';
+import {MainRoutes} from '../../navigation/routes/main-routes';
+import {MyImage} from './MyImage';
 
 type OpeningListItemProps = {
   opening: Opening;
   favourite?: boolean;
 };
 
-const OpeningListItem = ({opening, favourite} : OpeningListItemProps) => {
+const OpeningListItem = ({opening, favourite}: OpeningListItemProps) => {
   const navigation = useNavigation();
-  const { currentUser, removeFavoriteOpening, addFavoriteOpening } = useAuthStore();
+  const {currentUser, removeFavoriteOpening, addFavoriteOpening} =
+    useAuthStore();
 
   const handlePress = () => {
     navigation.navigate(MainRoutes.DETAILS, {opening});
@@ -34,13 +35,32 @@ const OpeningListItem = ({opening, favourite} : OpeningListItemProps) => {
   return (
     <Pressable onPress={handlePress}>
       <View style={styles.container}>
-        <MyImage uri={opening.photo}/>
+        {opening.name === 'Giucco Piano: Evans Gambit' ? (
+          <Image
+            source={require('../../../assets/images/evans.png')}
+            style={styles.image}
+          />
+        ) : opening.name === 'Caro Kann Defense' ? (
+          <Image
+            source={require('../../../assets/images/caro-kann.png')}
+            style={styles.image}
+          />
+        ) : opening.name === 'Sicilian Defense: Najdorf Variation' ? (
+          <Image
+            source={require('../../../assets/images/najdorf.png')}
+            style={styles.image}
+          />
+        ) : (
+          <MyImage uri={opening.photo} />
+        )}
         <View style={styles.detailsContainer}>
           <Text style={styles.name}>{opening.name}</Text>
           <Text style={styles.description}>{opening.description}</Text>
           <View style={styles.row}>
             <Text style={styles.label}>Difficulty:</Text>
-            <Text style={styles.value}>{calculateDifficultyColor(opening.difficultyLevel)}</Text>
+            <Text style={styles.value}>
+              {calculateDifficultyColor(opening.difficultyLevel)}
+            </Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Played by:</Text>
@@ -49,10 +69,15 @@ const OpeningListItem = ({opening, favourite} : OpeningListItemProps) => {
             </Text>
           </View>
         </View>
-        { favourite && (
-        <Pressable onPress={handleToggleFavorite}>
-          {isFavorite ? <FavoritesIconFilled width={40} height={40} /> : <FavoritesIcon width={40} height={40} />}
-        </Pressable>)}
+        {favourite && (
+          <Pressable onPress={handleToggleFavorite}>
+            {isFavorite ? (
+              <FavoritesIconFilled width={40} height={40} />
+            ) : (
+              <FavoritesIcon width={40} height={40} />
+            )}
+          </Pressable>
+        )}
       </View>
     </Pressable>
   );
@@ -96,14 +121,12 @@ const styles = StyleSheet.create({
   },
   value: {
     fontSize: 12,
-    color: '#888', 
+    color: '#888',
   },
-  icon: {
-    width: 24,
-    height: 24,
-    marginLeft: 'auto',
+  image: {
+    width: 100,
+    height: 100,
   },
 });
 
 export default OpeningListItem;
-

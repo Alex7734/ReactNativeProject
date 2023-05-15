@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
+import { useDebounce } from 'use-debounce';
 
 interface SearchBarProps {
   onSearch: (searchText: string) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+  const [searchText, setSearchText] = React.useState('');
+  const [debouncedSearchText] = useDebounce(searchText, 500);
+
+  const handleSearch = useCallback(() => {
+    onSearch(debouncedSearchText);
+  }, [debouncedSearchText, onSearch]);
+
+  React.useEffect(() => {
+    handleSearch();
+  }, [handleSearch]);
+
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
         placeholder="Search chess openings..."
-        onChangeText={onSearch}
+        value={searchText}
+        onChangeText={setSearchText}
       />
     </View>
   );

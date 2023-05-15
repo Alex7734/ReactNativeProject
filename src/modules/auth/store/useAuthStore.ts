@@ -57,7 +57,9 @@ export const useAuthStore = create(
       },
       updateUser: (user: User) => {
         set((state: AuthState) => {
-          const updatedUsers = state.users?.map(u => (u.id === user.id ? user : u));
+          const updatedUsers = state.users?.map(u =>
+            u.id === user.id ? user : u,
+          );
           return {
             ...state,
             users: updatedUsers,
@@ -65,10 +67,11 @@ export const useAuthStore = create(
           };
         });
       },
-      
+
       addPreferredOpening: (openingId: string) => {
         const currentUser = get().currentUser;
         if (!currentUser) return;
+        if (currentUser.prefferedOpenings.includes(openingId)) return;
 
         const newPreferredOpenings = [
           ...currentUser.prefferedOpenings,
@@ -115,6 +118,7 @@ export const useAuthStore = create(
           };
         });
       },
+
       addFavoriteOpening: (openingId: string) => {
         const currentUser = get().currentUser;
         if (!currentUser) return;

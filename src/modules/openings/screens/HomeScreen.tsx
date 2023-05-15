@@ -4,14 +4,12 @@ import {
   Pressable,
   Text,
   StyleSheet,
-  FlatList,
-  ActivityIndicator,
 } from 'react-native';
 
 import SearchBar from '../components/SearchBar';
 import FilterModal from '../components/FilterModal';
-import OpeningListItem from '../components/OpeningListItem';
 import { Opening } from '../types';
+import ChessOpeningsList from '../components/ChessOpeningsList';
 
 export const HomeScreen: React.FC = () => {
   const [searchValue, setSearchValue] = useState<string>('');
@@ -27,21 +25,16 @@ export const HomeScreen: React.FC = () => {
   const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`https://6453d40ae9ac46cedf30de1e.mockapi.io/chessOpenings?page=${page}&limit=10`)
+      const response = await fetch(
+        `https://6453d40ae9ac46cedf30de1e.mockapi.io/chessOpenings?page=${page}&limit=10`
+      );
       const result = await response.json();
       setOpenings((prevData) => (prevData ? [...prevData, ...result] : result));
       setHasMore(result.length === 10);
-      console.log(result)
-      console.log(page)
     } catch (error) {
       setOpenings([]);
       setHasMore(false);
-      console.log(page)
-      console.log(error);
     } finally {
-      console.log(openings)
-      console.log(page)
-
       setIsLoading(false);
     }
   }, [page]);
@@ -86,15 +79,11 @@ export const HomeScreen: React.FC = () => {
           <Text style={styles.filterButtonText}>Filters</Text>
         </Pressable>
       </View>
-      <FlatList
-        style={styles.flatList}
-        data={filteredOpenings}
-        renderItem={({ item }) => <OpeningListItem opening={item} />}
-        keyExtractor={(item) => item.id.toString()}
+      <ChessOpeningsList
+        openings={filteredOpenings}
+        isLoading={isLoading}
         onEndReached={handleEndReached}
-        onEndReachedThreshold={0}
       />
-           {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
       <FilterModal
         visible={modalVisible}
         onFilter={handleFilter}
@@ -129,13 +118,5 @@ const styles = StyleSheet.create({
   },
   alignLeft: {
     flex: 4,
-  },
-  alignRight: {
-    flex: 1,
-    alignItems: 'flex-end',
-  },
-  flatList: {
-    width: '100%',
-    padding: 5,
   },
 });

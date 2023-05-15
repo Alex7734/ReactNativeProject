@@ -1,11 +1,10 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MainRoutes } from '../routes/main-routes';
-import { LogBox, Pressable, StyleSheet, Text, View } from 'react-native';
-import { HomeRoutes, HomeTabsParamList } from '../routes/home-routes';
-import { HomeIcon, AccountIcon, FavoritesIcon } from '../../../assets/icons';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {LogBox, StyleSheet} from 'react-native';
+import {HomeRoutes, HomeTabsParamList} from '../routes/home-routes';
+import {HomeIcon, AccountIcon, FavoritesIcon} from '../../../assets/icons';
 import AccountScreen from '../../account/screens/AccountScreen';
-import { HomeScreen } from '../../openings/screens/HomeScreen';
+import {HomeScreen} from '../../openings/screens/HomeScreen';
 import FavoritesScreen from '../../openings/screens/FavoritesScreen';
 LogBox.ignoreAllLogs(true);
 
@@ -15,16 +14,16 @@ const HomeTabNavigator: React.FC = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#000',
+        tabBarActiveTintColor: '#E63946',
         tabBarStyle: styles.bottomTab,
         headerStyle: {
           elevation: 10,
           shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
+          shadowOffset: {width: 0, height: 2},
           shadowOpacity: 0.3,
           shadowRadius: 2,
           borderBottomLeftRadius: 20,
-          borderBottomRightRadius: 20
+          borderBottomRightRadius: 20,
         },
         headerTitle: 'Chess Openings Explorer',
         headerTitleAlign: 'center',
@@ -33,8 +32,7 @@ const HomeTabNavigator: React.FC = () => {
           fontSize: 20,
           alignSelf: 'center',
         },
-      }}
-    >
+      }}>
       <Tab.Screen
         name={HomeRoutes.HOME}
         options={{
@@ -51,7 +49,7 @@ const HomeTabNavigator: React.FC = () => {
       />
       <Tab.Screen
         name={HomeRoutes.ACCOUNT}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           tabBarIcon: () => <AccountIcon width={25} height={25} />,
         })}
         component={AccountScreen}
@@ -67,6 +65,11 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
     height: 60,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: -2},
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
   },
 });
 

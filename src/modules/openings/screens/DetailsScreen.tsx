@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
-import { Opening } from '../types';
-import { calculateDifficultyColor } from '../utils/calculateDifficultyLevel';
-import { useNavigation } from '@react-navigation/native';
-import { FavoritesIcon, FavoritesIconFilled } from '../../../assets/icons';
-import { useAuthStore } from '../../auth/store/useAuthStore';
+import React, {useState} from 'react';
+import {View, Text, Image, StyleSheet, Pressable} from 'react-native';
+import {Opening} from '../types';
+import {calculateDifficultyColor} from '../utils/calculateDifficultyLevel';
+import {useNavigation} from '@react-navigation/native';
+import {FavoritesIcon, FavoritesIconFilled} from '../../../assets/icons';
+import {useAuthStore} from '../../auth/store/useAuthStore';
 
 type DetailsScreenProps = {
   route: {
@@ -14,11 +14,14 @@ type DetailsScreenProps = {
   };
 };
 
-const DetailsScreen: React.FC<DetailsScreenProps> = ({ route }) => {
-  const { opening } = route.params;
+const DetailsScreen: React.FC<DetailsScreenProps> = ({route}) => {
+  const {opening} = route.params;
   const navigation = useNavigation();
-  const { currentUser, addFavoriteOpening, removeFavoriteOpening } = useAuthStore();
-  const [isFavorite, setIsFavorite] = useState(currentUser?.favorites.includes(opening.name) ?? false);
+  const {currentUser, addFavoriteOpening, removeFavoriteOpening} =
+    useAuthStore();
+  const [isFavorite, setIsFavorite] = useState(
+    currentUser?.favorites.includes(opening.name) ?? false,
+  );
 
   const toggleFavorite = () => {
     if (isFavorite) {
@@ -28,31 +31,49 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ route }) => {
     }
     setIsFavorite(!isFavorite);
   };
+
   const handlePress = () => {
     navigation.goBack();
   };
 
   return (
     <View style={styles.container}>
-     <View style={styles.titleContainer}>
-        <Pressable onPress={handlePress} style={styles.button}>
-          <Text style={styles.buttonText}>Back</Text>
-        </Pressable>
-        <Pressable onPress={toggleFavorite}>
-          {isFavorite ? <FavoritesIconFilled width={40} height={40} /> : <FavoritesIcon width={40} height={40} />}
-        </Pressable>
-      </View>
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: opening.photo }} style={styles.image} />
-      </View>
+      {opening.name === 'Giucco Piano: Evans Gambit' ? (
+        <Image
+          source={require('../../../assets/images/evans.png')}
+          style={styles.image}
+        />
+      ) : opening.name === 'Caro Kann Defense' ? (
+        <Image
+          source={require('../../../assets/images/caro-kann.png')}
+          style={styles.image}
+        />
+      ) : opening.name === 'Sicilian Defense: Najdorf Variation' ? (
+        <Image
+          source={require('../../../assets/images/najdorf.png')}
+          style={styles.image}
+        />
+      ) : (
+        <Image source={{uri: opening.photo}} style={styles.image} />
+      )}
+      <Pressable onPress={handlePress} style={styles.backButton}>
+        <Text style={styles.buttonText}>Back</Text>
+      </Pressable>
+      <Pressable onPress={toggleFavorite} style={styles.favoriteButton}>
+        {isFavorite ? (
+          <FavoritesIconFilled width={40} height={40} />
+        ) : (
+          <FavoritesIcon width={40} height={40} />
+        )}
+      </Pressable>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{opening.name}</Text>
         <Text style={styles.description}>{opening.description}</Text>
         <Text style={styles.difficulty}>
           Difficulty: {calculateDifficultyColor(opening.difficultyLevel)}
         </Text>
-        <Text style={styles.difficulty}>Played by:
-              {opening.whiteOpening ? 'White' : 'Black'}
+        <Text style={styles.difficulty}>
+          Played by: {opening.whiteOpening ? 'White' : 'Black'}
         </Text>
       </View>
     </View>
@@ -64,29 +85,45 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  imageContainer: {
-    flex: 1,
-  },
   image: {
     flex: 1,
     resizeMode: 'cover',
     opacity: 0.9,
   },
-  titleContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  imageFit: {
+    flex: 1,
+    resizeMode: 'contain',
+    opacity: 0.9,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 16,
+    left: 16,
+    backgroundColor: '#E63946',
+    paddingVertical: 8,
     paddingHorizontal: 16,
-    paddingTop: 16,
+    borderRadius: 25,
+    zIndex: 1,
+  },
+  favoriteButton: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    zIndex: 1,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
   },
   textContainer: {
+    justifyContent: 'flex-end',
     paddingHorizontal: 16,
     paddingBottom: 16,
+    backgroundColor: '#F5F5F5',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    backgroundColor: '#F5F5F5',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: -2 },
+    shadowOffset: {width: 0, height: -2},
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
@@ -107,18 +144,6 @@ const styles = StyleSheet.create({
     color: '#1D3557',
     fontSize: 16,
   },
-  button: {
-    backgroundColor: '#E63946',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 25,
-    alignSelf: 'flex-start',
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-  },
 });
-
 
 export default DetailsScreen;
