@@ -5,6 +5,7 @@ import {calculateDifficultyColor} from '../utils/calculateDifficultyLevel';
 import {useNavigation} from '@react-navigation/native';
 import {FavoritesIcon, FavoritesIconFilled} from '../../../assets/icons';
 import {useAuthStore} from '../../auth/store/useAuthStore';
+import Animated, {BounceInDown, BounceInRight, BounceInUp} from 'react-native-reanimated';
 
 type DetailsScreenProps = {
   route: {
@@ -61,9 +62,13 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({route}) => {
       </Pressable>
       <Pressable onPress={toggleFavorite} style={styles.favoriteButton}>
         {isFavorite ? (
-          <FavoritesIconFilled width={40} height={40} />
+          <Animated.View key={1} entering={BounceInRight} > 
+            <FavoritesIconFilled width={40} height={40} />
+          </Animated.View>
         ) : (
-          <FavoritesIcon width={40} height={40} />
+          <Animated.View key={2} entering={BounceInUp} >
+            <FavoritesIcon width={40} height={40} />
+          </Animated.View>
         )}
       </Pressable>
       <View style={styles.textContainer}>

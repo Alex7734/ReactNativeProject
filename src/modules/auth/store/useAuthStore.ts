@@ -15,7 +15,7 @@ const usersMocked: User[] = [
   },
   {
     id: 2,
-    email: 'alexmihoc2807@gmail.com',
+    email: 'Alec',
     username: 'alex7734',
     password: '123456',
     profilePicture: '',
@@ -167,7 +167,7 @@ export const useAuthStore = create(
       },
     }),
     {
-      name: 'user-storage',
+      name: 'user-storage-auth',
       storage: createJSONStorage(() => zustandStorage),
     },
   ),
